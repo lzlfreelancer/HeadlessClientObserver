@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
@@ -11,6 +12,7 @@ public abstract class BaseTest
 {
 
     protected string m_test_name = "Base test";
+    protected string m_test_description = "Base test";
     protected List<TestClient> m_clients = new List<TestClient>();
     protected string m_log_path = "testLog.txt";
     protected RichTextBox m_text_output;
@@ -41,7 +43,7 @@ public abstract class BaseTest
         }
     }
 
-    public virtual bool hasTestEnded()
+    public virtual bool hasTestEnded(Action<Dictionary<string, string>> on_test_complete)
     {
         if (m_has_test_ended)
         {
@@ -57,8 +59,14 @@ public abstract class BaseTest
         }
         if (hasAllProcessesExited)
         {
-            m_has_test_ended = true;
+
             End();
+            m_has_test_ended = true;
+            Dictionary<string, string> testInfo = new Dictionary<string, string>();
+            testInfo["testName"] = m_test_name;
+            testInfo["testDescription"] = m_test_description;
+            on_test_complete(testInfo);
+            
         }
         return hasAllProcessesExited;
     }

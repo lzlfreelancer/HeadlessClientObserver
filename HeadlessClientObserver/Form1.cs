@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,82 +17,87 @@ namespace HeadlessClientTest
 {
     public partial class Form1 : Form
     {
+
+        private string m_file_path = "testLog.txt";
+
         public Form1(string[] args)
         {
             InitializeComponent();
 
+            if (args.Length != 0)
+            {
+                // file path via args
+                m_file_path = args[0];
+            }
+
+            // declear what happens when a test finishes
+            Action<Dictionary<string, string>> on_test_complete = testInfo =>
+            {
+                readLogFileAndPrintResults(testInfo);
+            };
+
             // run tests
             TestSuite tests = new TestSuite();
             tests.Init(outputText);
-            tests.update();
-
-            // default test file
-            string pathToTextfile = "testLog.txt";
-
-            if (args.Length != 0)
-            {
-                // or file via args
-                pathToTextfile = args[0];
-            }
-
-            // generate report and print on screen
-            readLogFileAndPrintResults(pathToTextfile);
+            tests.update(on_test_complete);
 
         }
 
-        private async void readLogFileAndPrintResults(string pathToTextfile)
+        private async void readLogFileAndPrintResults(Dictionary<string, string> testInfo)
         {
             try
             {
-                StreamReader textFile = new StreamReader(pathToTextfile);
-                string fileContents = textFile.ReadToEnd();
+                StreamReader textFile = new StreamReader(m_file_path);
+                string fileContent = textFile.ReadToEnd();
                 textFile.Close();
-                showResultsGeneratedWithTestLog(fileContents);
+                showResultsGeneratedWithTestLog(testInfo, fileContent);
             }
             catch (System.IO.IOException)
             {
                 await Task.Delay(10);
-                readLogFileAndPrintResults(pathToTextfile);
+                readLogFileAndPrintResults(testInfo);
             }
         }
 
-        private void showResultsGeneratedWithTestLog(string fileContents)
+        private void showResultsGeneratedWithTestLog(Dictionary<string, string> testInfo, string fileContent)
         {
 
             TestReader testCaseReader = new TestReader();
 
-            List<TestResultDecipher> resultsList = testCaseReader.runTests(fileContents);
+            TestResultDecipher result = testCaseReader.runTest(testInfo, fileContent);
 
-            foreach (var result in resultsList)
+            resultToScreen(result);
+
+        }
+
+        private void resultToScreen(TestResultDecipher result)
+        {
+            outputText.AppendText(result.testName + "\n");
+            outputText.AppendText(result.testDescription + "\n");
+
+            foreach (var testStatus in result.statusList)
             {
-                outputText.AppendText(result.testName + "\n");
-                outputText.AppendText(result.testDescription + "\n");
-
-                foreach (var testStatus in result.statusList)
+                if (testStatus.Item2)
                 {
-                    if (testStatus.Item2)
-                    {
-                        // it's a pass
-                        outputText.SelectionStart = outputText.TextLength;
-                        outputText.SelectionLength = 0;
+                    // it's a pass
+                    outputText.SelectionStart = outputText.TextLength;
+                    outputText.SelectionLength = 0;
 
-                        outputText.SelectionColor = Color.Green;
-                        outputText.AppendText("\n" + testStatus.Item1 + " : PASSED " + "\n\n");
-                        outputText.SelectionColor = outputText.ForeColor;
+                    outputText.SelectionColor = Color.Green;
+                    outputText.AppendText("\n" + testStatus.Item1 + " : PASSED " + "\n\n");
+                    outputText.SelectionColor = outputText.ForeColor;
 
-                    }
-                    else
-                    {
-                        // Test failed
-                        outputText.SelectionStart = outputText.TextLength;
-                        outputText.SelectionLength = 0;
-
-                        outputText.SelectionColor = Color.Red;
-                        outputText.AppendText("\n" + testStatus.Item1 + " : FAILED - " + testStatus.Item3 + "\n\n");
-                        outputText.SelectionColor = outputText.ForeColor;
-                    }
                 }
+                else
+                {
+                    // Test failed
+                    outputText.SelectionStart = outputText.TextLength;
+                    outputText.SelectionLength = 0;
 
+                    outputText.SelectionColor = Color.Red;
+                    outputText.AppendText("\n" + testStatus.Item1 + " : FAILED - " + testStatus.Item3 + "\n\n");
+                    outputText.SelectionColor = outputText.ForeColor;
+                }
             }
         }
 

@@ -27,7 +27,7 @@ public class Test2 : BaseTest
 
     public Test2()
     {
-        m_test_name = "Test 2";
+        m_test_name = "Test #2";
     }
 
     public override void Init(RichTextBox outputText)

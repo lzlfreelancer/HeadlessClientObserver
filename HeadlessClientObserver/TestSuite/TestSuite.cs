@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Linq;
@@ -35,7 +36,7 @@ class TestSuite
 
     }
 
-    public virtual async void update()
+    public virtual async void update(Action<Dictionary<string, string>> on_test_complete)
     {
 
         while (!m_has_tests_completed)
@@ -46,7 +47,7 @@ class TestSuite
 
             foreach(BaseTest test in m_tests)
             {
-                if (!test.isDisabled && !test.hasTestEnded())
+                if (!test.isDisabled && !test.hasTestEnded(on_test_complete))
                 {
                     hasAllTestEnded = false;
                 }
@@ -58,7 +59,7 @@ class TestSuite
             }
 
             await Task.Delay(300);
-            update();
+            update(on_test_complete);
 
         }
 

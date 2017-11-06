@@ -42,7 +42,33 @@ public class Test1: BaseTest
 
     public Test1()
     {
-        m_test_name = "Test 1";
+        m_test_name = "Test #1";
+        m_test_description =
+            @"
+Test #1
+Host 1:
+Create Party 1, size 4
+
+Client 1:
+Join Party 1 (success)
+
+Client 2:
+Join Party 1 (success)
+
+Client 3: 
+Join Party 1 (success)
+
+Client 4: 
+Join Party 1 (fail)
+
+Result:
+All Clients should be added to the Host
+
+//HOST1 CREATE_PARTY, WAIT 30 seconds, QUIT
+//CLIENT1 SEARCH_PARTY, JOIN_PARTY, Wait 10 seconds, LEAVE_PARTY, QUIT
+//CLIENT2 SEARCH_PARTY, JOIN_PARTY, Wait 10 seconds, LEAVE_PARTY, QUIT
+//CLIENT3 SEARCH_PARTY, JOIN_PARTY, Wait 10 seconds, LEAVE_PARTY, QUIT           
+        ";
     }
 
     public override void Init(RichTextBox outputText)

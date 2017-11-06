@@ -24,19 +24,19 @@ namespace HeadlessClientTestResultDecipher
             switch (testName)
             {
                 case "Test #1":
-                    return new Test1();
+                    return new TestDecipher1();
                 case "Test #2":
-                    return new Test2();
+                    return new TestDecipher2();
                 case "Test #3":
-                    return new Test3();
+                    return new TestDecipher3();
                 case "Test #4":
-                    return new Test4();
+                    return new TestDecipher4();
                 case "Test #5":
-                    return new Test5();
+                    return new TestDecipher5();
                 case "Test #6":
-                    return new Test6();
+                    return new TestDecipher6();
                 case "Test #7":
-                    return new Test7();
+                    return new TestDecipher7();
                 default:
                     return null;
             }
@@ -297,205 +297,6 @@ namespace HeadlessClientTestResultDecipher
 
             this.statusList.Add(description, true, "");
             return;
-
-        }
-
-    }
-
-    public class Test1: TestResultDecipher
-    {
-
-        public override void assesTestResult()
-        {
-            base.assesTestResult();
-            this.assertNumberOfIndividualEntities(3);
-
-            var combinedActions = new List<Tuple<string, int>>
-            {
-                new Tuple<string, int>( "CREATE", 1 ),
-                new Tuple<string, int>( "SEARCH", 2 )
-            };
-
-            this.assertActionCombination(combinedActions);
-
-            var orderOfAction = new List<string>
-            {
-                "CREATE",
-                "JOIN",
-                "JOIN"
-            };
-
-            this.assertOrderingOfAction(orderOfAction);
-
-            var references = new List<string>
-            {
-                "foo"
-            };
-
-            this.assertReferenceMatching(references);
-
-        }
-
-    }
-
-    public class Test2: TestResultDecipher
-    {
-
-        public override void assesTestResult()
-        {
-            base.assesTestResult();
-            this.assertNumberOfIndividualEntities(3);
-
-            var combinedActions = new List<Tuple<string, int>>
-            {
-                new Tuple<string, int>( "CREATE", 2 ),
-                new Tuple<string, int>( "CREATEFAIL", 1 )
-            };
-
-            this.assertActionCombination(combinedActions);
-
-            var orderOfAction = new List<string>
-            {
-                "CREATE",
-                "CREATE",
-                "CREATEFAIL"
-            };
-
-            this.assertOrderingOfAction(orderOfAction);
-
-            var references = new List<string>
-            {
-                "foo"
-            };
-
-            this.assertReferenceMatching(references);
-
-        }
-
-    }
-
-    public class Test3 : TestResultDecipher
-    {
-
-        public override void assesTestResult()
-        {
-            base.assesTestResult();
-            this.assertNumberOfIndividualEntities(2);
-
-            var combinedActions = new List<Tuple<string, int>>
-            {
-                new Tuple<string, int>( "CREATE", 1 ),
-                new Tuple<string, int>( "SEARCH", 1 ),
-                new Tuple<string, int>( "SEARCHFAIL", 1 )
-            };
-
-            this.assertActionCombination(combinedActions);
-
-            var orderOfAction = new List<string>
-            {
-                "CREATE",
-                "SEARCH",
-                "SEARCHFAIL"
-            };
-
-            this.assertOrderingOfAction(orderOfAction);
-
-            var references1 = new List<string>
-            {
-                "n",
-                "pass"
-            };
-
-            this.assertReferenceMatching(1, references1);
-
-            var references2 = new List<string>
-            {
-                "n"
-            };
-
-            this.assertReferenceMatching(2, references2);
-
-        }
-
-    }
-
-    public class Test4 : TestResultDecipher
-    {
-
-        public override void assesTestResult()
-        {
-            base.assesTestResult();
-            this.assertNumberOfIndividualEntities(5);
-
-            var combinedActions = new List<Tuple<string, int>>
-            {
-                new Tuple<string, int>( "CREATE", 1 ),
-                new Tuple<string, int>( "JOIN", 3 ),
-                new Tuple<string, int>( "JOINFAIL", 1 )
-            };
-
-            this.assertActionCombination(combinedActions);
-
-            var orderOfAction = new List<string>
-            {
-                "CREATE",
-                "JOIN",
-                "JOIN",
-                "JOIN",
-                "JOINFAIL"
-            };
-
-            this.assertOrderingOfAction(orderOfAction);
-
-            var references1 = new List<string>
-            {
-                "foo",
-                "3"
-            };
-
-            this.assertReferenceMatching(1, references1);
-
-            var references2 = new List<string>
-            {
-                "foo"
-            };
-
-            this.assertReferenceMatching(2, references2);
-            this.assertReferenceMatching(3, references2);
-            this.assertReferenceMatching(4, references2);
-            this.assertReferenceMatching(5, references2);
-
-        }
-
-    }
-
-    public class Test5 : TestResultDecipher
-    {
-
-        public override void assesTestResult()
-        {
-            base.assesTestResult();
-            this.assertNumberOfIndividualEntities(3);
-
-            var combinedActions = new List<Tuple<string, int>>
-            {
-                new Tuple<string, int>( "CREATE", 2 ),
-                new Tuple<string, int>( "JOIN", 2 ),
-                new Tuple<string, int>( "KICK", 1 )
-            };
-
-            this.assertActionCombination(combinedActions);
-
-            var orderOfAction = new List<string>
-            {
-                "CREATE",
-                "CREATE",
-                "JOIN",
-                "JOIN",
-                "KICK"
-            };
-
-            this.assertOrderingOfAction(orderOfAction);
 
         }
 

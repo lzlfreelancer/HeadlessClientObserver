@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections;
 using System.Collections.Generic;
 using HeadlessClientTestResultDecipher;
 
@@ -11,9 +12,32 @@ namespace HeadlessClientTestResultReader
 
         private List<TestResultDecipher> resultsList = new List<TestResultDecipher>();
         private TestDecipherFactory testDecipherFactory = new TestDecipherFactory();
-        bool doReadTestResult = false;
 
-        public List<TestResultDecipher> runTests(string fileContent)
+        public TestResultDecipher runTest(Dictionary<string, string> testInfo, string fileContent)
+        {
+            TestResultDecipher testDecipher = testDecipherFactory.createTestDecipher(testInfo["testName"]);
+            testDecipher.testName = testInfo["testName"];
+            testDecipher.testDescription = testInfo["testDescription"];
+
+            using (StringReader reader = new StringReader(fileContent))
+            {
+                string line = string.Empty;
+                do
+                {
+                    line = reader.ReadLine();
+                    if (line != null)
+                    {
+                        // do something with the line
+                        readLineForTest(testInfo["testName"], line, testDecipher);
+                    }
+
+                } while (line != null);
+            }
+
+            return testDecipher;
+        }
+
+        /*public List<TestResultDecipher> runTests(string fileContent)
         {
 
             using (StringReader reader = new StringReader(fileContent))
@@ -38,9 +62,48 @@ namespace HeadlessClientTestResultReader
 
             return this.resultsList;
 
+        }*/
+
+        public TestResultDecipher readLineForTest(string testName, string line, TestResultDecipher testDecipher)
+        {
+
+            // Test result goes something like this:
+            // testName;ClientId;Action;args
+            // has to have 3 words min, args are optional
+
+            string[] words = line.Split(';');
+
+            if(words[0] != testName || words.Length < 3)
+            {
+                // This is not the required test case, or data is not valid
+                return testDecipher;
+            }
+
+            if (testDecipher != null)
+            {
+                if (words.Length >= 3)
+                {
+                    TestActionRecord testActionRecord = new TestActionRecord();
+                    //testActionRecord.type = words[0];
+                    testActionRecord.id = Convert.ToInt32(words[1]);
+                    testActionRecord.action = words[2];
+                    if (words.Length > 3)
+                    {
+                        for (var i = 3; i < words.Length; i++)
+                        {
+                            string reference = words[i];
+                            testActionRecord.references.Add(reference);
+                        }
+                    }
+                    testDecipher.addTestActionRecord(testActionRecord);
+                }
+            }
+
+            return testDecipher;
+
         }
 
-        public void readLine(string line)
+        /*public void readLine(string line)
         {
 
             string[] words = line.Split(';');
@@ -92,7 +155,7 @@ namespace HeadlessClientTestResultReader
 
             }
             
-        }
+        }*/
 
     }
 }
