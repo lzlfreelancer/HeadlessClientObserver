@@ -302,20 +302,4 @@ namespace HeadlessClientTestResultDecipher
 
     }
 
-    public class Test6 : TestResultDecipher
-    {
-
-
-
-    }
-
-    public class Test7 : TestResultDecipher
-    {
-
-
-
-    }
-
-
-
 }

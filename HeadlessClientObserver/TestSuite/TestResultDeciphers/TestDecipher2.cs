@@ -13,31 +13,16 @@ namespace HeadlessClientTestResultDecipher
         public override void assesTestResult()
         {
             base.assesTestResult();
-            this.assertNumberOfIndividualEntities(3);
+            this.assertNumberOfIndividualEntities(2);
 
             var combinedActions = new List<Tuple<string, int>>
             {
-                new Tuple<string, int>( "CREATE", 2 ),
-                new Tuple<string, int>( "CREATEFAIL", 1 )
+                new Tuple<string, int>( "Attemping to Create Party", 2 ),
+                new Tuple<string, int>( "CreateParty", 2 ),
+                new Tuple<string, int>( "CreatePartyFailed", 1 )
             };
 
             this.assertActionCombination(combinedActions);
-
-            var orderOfAction = new List<string>
-            {
-                "CREATE",
-                "CREATE",
-                "CREATEFAIL"
-            };
-
-            this.assertOrderingOfAction(orderOfAction);
-
-            var references = new List<string>
-            {
-                "foo"
-            };
-
-            this.assertReferenceMatching(references);
 
         }
 

@@ -28,6 +28,18 @@ public class Test2 : BaseTest
     public Test2()
     {
         m_test_name = "Test #2";
+        m_test_description =
+            @"
+Test #2:
+Host1:
+Create Party named 'n'
+
+Host 2:
+Create Party named 'n'
+
+Result:
+Host 2 should not be able to create this party.
+";
     }
 
     public override void Init(RichTextBox outputText)

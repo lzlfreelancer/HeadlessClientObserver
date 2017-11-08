@@ -29,19 +29,26 @@ namespace HeadlessClientTest
                 // file path via args
                 m_file_path = args[0];
             }
+            // run tests
+            runTests();
 
+        }
+
+        private async void runTests()
+        {
             // declear what happens when a test finishes
             Action<Dictionary<string, string>> on_test_complete = testInfo =>
             {
                 readLogFileAndPrintResults(testInfo);
             };
 
-            // run tests
-            TestSuite tests = new TestSuite();
-            tests.Init(outputText);
-            tests.update(on_test_complete);
-
-        }
+            await Task.Run(() =>
+            {
+                TestSuite tests = new TestSuite();
+                tests.Init(outputText);
+                tests.update(on_test_complete);
+            });
+        } 
 
         private async void readLogFileAndPrintResults(Dictionary<string, string> testInfo)
         {
@@ -66,8 +73,13 @@ namespace HeadlessClientTest
 
             TestResultDecipher result = testCaseReader.runTest(testInfo, fileContent);
 
-            resultToScreen(result);
+            result.assesTestResult();
 
+            outputText.Invoke(new Action(() =>
+            {
+                resultToScreen(result);
+            }));
+            
         }
 
         private void resultToScreen(TestResultDecipher result)
