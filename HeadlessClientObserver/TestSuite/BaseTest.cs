@@ -67,13 +67,18 @@ public abstract class BaseTest
 
             m_has_test_ended = true;
             End();
-            Dictionary<string, string> testInfo = new Dictionary<string, string>();
-            testInfo["testName"] = m_test_name;
-            testInfo["testDescription"] = m_test_description;
-            on_test_complete(testInfo);
+            on_test_complete(GetTestInfo());
             
         }
         return hasAllProcessesExited;
+    }
+
+    public virtual Dictionary<string, string> GetTestInfo()
+    {
+        Dictionary<string, string> testInfo = new Dictionary<string, string>();
+        testInfo["testName"] = m_test_name;
+        testInfo["testDescription"] = m_test_description;
+        return testInfo;
     }
 
     public virtual void End()

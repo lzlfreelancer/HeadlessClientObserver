@@ -54,6 +54,7 @@
             this.Name = "Form1";
             this.Text = "Headless Client Tests";
             this.TopMost = true;
+            this.Shown += new System.EventHandler(this.Form1_Shown);
             this.ResumeLayout(false);
 
         }

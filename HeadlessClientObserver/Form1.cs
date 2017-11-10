@@ -19,18 +19,35 @@ namespace HeadlessClientTest
     {
 
         private string m_file_path = "testLog.txt";
+        private string[] m_args = new string[0];
 
         public Form1(string[] args)
         {
             InitializeComponent();
+            m_args = args;
 
-            if (args.Length != 0)
+        }
+
+        private void Form1_Shown(Object sender, EventArgs e)
+        {
+
+            if (m_args.Length != 0)
             {
                 // file path via args
-                m_file_path = args[0];
+                m_file_path = m_args[0];
+                // no need to run processes, just read results
+                TestSuite tests = new TestSuite();
+                tests.Init(outputText);
+                foreach (BaseTest test in tests.GetTests())
+                {
+                    readLogFileAndPrintResults(test.GetTestInfo());
+                }
             }
-            // run tests
-            runTests();
+            else
+            {
+                // run tests
+                runTests();
+            }
 
         }
 
@@ -38,7 +55,7 @@ namespace HeadlessClientTest
         {
             // declear what happens when a test finishes
             Action<Dictionary<string, string>> on_test_complete = testInfo =>
-            {     
+            {   
                 readLogFileAndPrintResults(testInfo);
             };
 
@@ -46,6 +63,7 @@ namespace HeadlessClientTest
             {
                 TestSuite tests = new TestSuite();
                 tests.Init(outputText);
+                tests.StartTests(outputText);
                 tests.update(on_test_complete);
             });
 
