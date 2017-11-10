@@ -12,7 +12,6 @@ class TestSuite
 
     private List<BaseTest> m_tests = new List<BaseTest>();
     protected string m_log_path = "testLog.txt";
-    protected bool m_has_tests_completed = false;
 
     public virtual void Init(RichTextBox outputText)
     {
@@ -25,7 +24,16 @@ class TestSuite
         Test2 testCase2 = new Test2();
         m_tests.Add(testCase2);
 
-        foreach(BaseTest test in m_tests)
+        Test3 testCase3 = new Test3();
+        m_tests.Add(testCase3);
+
+        Test4 testCase4 = new Test4();
+        m_tests.Add(testCase4);
+
+        Test5 testCase5 = new Test5();
+        m_tests.Add(testCase5);
+
+        foreach (BaseTest test in m_tests)
         {
             if (!test.isDisabled)
             {
@@ -39,29 +47,23 @@ class TestSuite
     public virtual async void update(Action<Dictionary<string, string>> on_test_complete)
     {
 
-        while (!m_has_tests_completed)
+        bool hasAllTestEnded = true;
+
+        foreach (BaseTest test in m_tests)
         {
-            // check if all the tests has ended
-
-            bool hasAllTestEnded = true;
-
-            foreach(BaseTest test in m_tests)
+            if (!test.isDisabled && !test.hasTestEnded(on_test_complete))
             {
-                if (!test.isDisabled && !test.hasTestEnded(on_test_complete))
-                {
-                    hasAllTestEnded = false;
-                }
+                hasAllTestEnded = false;
             }
-
-            if (hasAllTestEnded)
-            {
-                return;
-            }
-
-            await Task.Delay(300);
-            update(on_test_complete);
-
         }
+
+        if (hasAllTestEnded)
+        {
+            return;
+        }
+
+        await Task.Delay(1000);
+        update(on_test_complete);
 
     }
 

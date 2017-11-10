@@ -13,26 +13,46 @@ namespace HeadlessClientTestResultDecipher
         public override void assesTestResult()
         {
             base.assesTestResult();
-            this.assertNumberOfIndividualEntities(3);
+            this.assertNumberOfIndividualEntities(5);
 
-            var combinedActions = new List<Tuple<string, int>>
+            var combinedActions = new List<Tuple<List<string>, int>>
             {
-                new Tuple<string, int>( "CreatingClient", 5 ),
-                new Tuple<string, int>( "Attemping to Create Party", 1 ),
-                new Tuple<string, int>( "CreateParty", 1 ),
-                new Tuple<string, int>( "JoinParty", 3 ),
-                new Tuple<string, int>( "JoinFailed", 1 )
-                
+                new Tuple<List<string>, int>(
+                    new List<string>()
+                    {
+                        "CreatingClient"
+                    }
+                    , 5 ),
+                new Tuple<List<string>, int>(
+                    new List<string>()
+                    {
+                        "Attemping to Create Party",
+                        "Party1"
+                    }
+                    , 1 ),
+                new Tuple<List<string>, int>(
+                    new List<string>()
+                    {
+                        "CreateParty",
+                        "Party1"
+                    }
+                    , 1 ),
+                new Tuple<List<string>, int>(
+                    new List<string>()
+                    {
+                        "JoinParty",
+                        "Party1"
+                    }
+                    , 3 ),
+                new Tuple<List<string>, int>(
+                    new List<string>()
+                    {
+                        "JoinFailed"
+                    }
+                    , 1 )
             };
 
-            this.assertActionCombination(combinedActions);
-
-            var references = new List<string>
-            {
-                "Party1"
-            };
-
-            this.assertReferenceMatching(references);
+            this.assertActionArgumentsCombination(combinedActions);
 
         }
 

@@ -91,7 +91,7 @@ All Clients should be added to the Host
         for(int i = 0; i < numOfClients; i++)
         {
             TestClient client = new TestClient();
-            client.PerformAction(String.Format("-c {0} -t 1 -a 2", Globals.clientIdGenerator.getNextId())); // join party, wait 10 exit
+            client.PerformAction(String.Format("-c {0} -t 1 -a 2", Globals.clientIdGenerator.getNextId())); // wait 10, join party, wait 10 exit
             m_clients.Add(client);
         }
 

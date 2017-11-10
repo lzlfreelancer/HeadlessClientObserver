@@ -50,7 +50,7 @@ public abstract class BaseTest
         if (m_has_test_ended)
         {
             // test has already ended
-            return m_has_test_ended;
+            return true;
         }
         bool hasAllProcessesExited = true;
         foreach(TestClient testClient in m_clients)
@@ -60,6 +60,8 @@ public abstract class BaseTest
                 hasAllProcessesExited = false;
             }
         }
+        
+
         if (hasAllProcessesExited)
         {
 

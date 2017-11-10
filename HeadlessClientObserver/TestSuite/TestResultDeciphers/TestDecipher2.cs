@@ -15,14 +15,41 @@ namespace HeadlessClientTestResultDecipher
             base.assesTestResult();
             this.assertNumberOfIndividualEntities(2);
 
-            var combinedActions = new List<Tuple<string, int>>
+            /*var combinedActions = new List<Tuple<string, int>>
             {
                 new Tuple<string, int>( "Attemping to Create Party", 2 ),
                 new Tuple<string, int>( "CreateParty", 2 ),
                 new Tuple<string, int>( "CreatePartyFailed", 1 )
+            };*/
+
+            var combinedActions = new List<Tuple<List<string>, int>>
+            {
+                new Tuple<List<string>, int>(
+                    new List<string>()
+                    {
+                        "Attemping to Create Party",
+                        "n"
+                    }
+                    , 2 ),
+                new Tuple<List<string>, int>(
+                    new List<string>()
+                    {
+                        "CreateParty",
+                        "n"
+                    }
+                    , 2 ),
+                new Tuple<List<string>, int>(
+                    new List<string>()
+                    {
+                        "CreatePartyFailed",
+                        "n"
+                    }
+                    , 1 )
             };
 
-            this.assertActionCombination(combinedActions);
+            this.assertActionArgumentsCombination(combinedActions);
+
+            //this.assertActionCombination(combinedActions);
 
         }
 

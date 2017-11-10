@@ -13,45 +13,34 @@ namespace HeadlessClientTestResultDecipher
         public override void assesTestResult()
         {
             base.assesTestResult();
-            this.assertNumberOfIndividualEntities(5);
+            this.assertNumberOfIndividualEntities(2);
 
-            var combinedActions = new List<Tuple<string, int>>
+            var combinedActions = new List<Tuple<List<string>, int>>
             {
-                new Tuple<string, int>( "CREATE", 1 ),
-                new Tuple<string, int>( "JOIN", 3 ),
-                new Tuple<string, int>( "JOINFAIL", 1 )
+                new Tuple<List<string>, int>(
+                    new List<string>()
+                    {
+                        "Attemping to Create Party",
+                        "Party2"
+                    }
+                    , 1 ),
+                new Tuple<List<string>, int>(
+                    new List<string>()
+                    {
+                        "CreateParty",
+                        "Party2"
+                    }
+                    , 1 ),
+                new Tuple<List<string>, int>(
+                    new List<string>()
+                    {
+                        "JoinParty",
+                        "Party2"
+                    }
+                    , 1 )
             };
 
-            this.assertActionCombination(combinedActions);
-
-            var orderOfAction = new List<string>
-            {
-                "CREATE",
-                "JOIN",
-                "JOIN",
-                "JOIN",
-                "JOINFAIL"
-            };
-
-            this.assertOrderingOfAction(orderOfAction);
-
-            var references1 = new List<string>
-            {
-                "foo",
-                "3"
-            };
-
-            this.assertReferenceMatching(1, references1);
-
-            var references2 = new List<string>
-            {
-                "foo"
-            };
-
-            this.assertReferenceMatching(2, references2);
-            this.assertReferenceMatching(3, references2);
-            this.assertReferenceMatching(4, references2);
-            this.assertReferenceMatching(5, references2);
+            this.assertActionArgumentsCombination(combinedActions);
 
         }
 

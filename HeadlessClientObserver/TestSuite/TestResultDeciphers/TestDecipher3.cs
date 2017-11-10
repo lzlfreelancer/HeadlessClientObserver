@@ -13,40 +13,66 @@ namespace HeadlessClientTestResultDecipher
         public override void assesTestResult()
         {
             base.assesTestResult();
-            this.assertNumberOfIndividualEntities(2);
+            this.assertNumberOfIndividualEntities(4);
 
-            var combinedActions = new List<Tuple<string, int>>
+            var combinedActions = new List<Tuple<List<string>, int>>
             {
-                new Tuple<string, int>( "CREATE", 1 ),
-                new Tuple<string, int>( "SEARCH", 1 ),
-                new Tuple<string, int>( "SEARCHFAIL", 1 )
+                new Tuple<List<string>, int>(
+                    new List<string>()
+                    {
+                        "Attemping to Create Party",
+                        "x",
+                        "y"
+                    }
+                    , 1 ),
+                new Tuple<List<string>, int>(
+                    new List<string>()
+                    {
+                        "CreateParty",
+                        "x",
+                        "y"
+                    }
+                    , 1 ),
+                new Tuple<List<string>, int>(
+                    new List<string>()
+                    {
+                        "Attemping to Search Party",
+                        "x",
+                        "y"
+                    }
+                    , 1 ),
+                new Tuple<List<string>, int>(
+                    new List<string>()
+                    {
+                        "Attemping to Search Party",
+                        "x",
+                        "yxx"
+                    }
+                    , 1 ),
+                new Tuple<List<string>, int>(
+                    new List<string>()
+                    {
+                        "Attemping to Search Party",
+                        "asdf"
+                    }
+                    , 1 ),
+                new Tuple<List<string>, int>(
+                    new List<string>()
+                    {
+                        "FoundParty",
+                        "x"
+                    }
+                    , 1 ),
+                new Tuple<List<string>, int>(
+                    new List<string>()
+                    {
+                        "SearchParty",
+                        "Empty"
+                    }
+                    , 1 )
             };
 
-            this.assertActionCombination(combinedActions);
-
-            var orderOfAction = new List<string>
-            {
-                "CREATE",
-                "SEARCH",
-                "SEARCHFAIL"
-            };
-
-            this.assertOrderingOfAction(orderOfAction);
-
-            var references1 = new List<string>
-            {
-                "n",
-                "pass"
-            };
-
-            this.assertReferenceMatching(1, references1);
-
-            var references2 = new List<string>
-            {
-                "n"
-            };
-
-            this.assertReferenceMatching(2, references2);
+            this.assertActionArgumentsCombination(combinedActions);
 
         }
 

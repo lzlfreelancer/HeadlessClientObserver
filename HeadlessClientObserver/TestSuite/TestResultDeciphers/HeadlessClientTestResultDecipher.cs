@@ -132,41 +132,116 @@ namespace HeadlessClientTestResultDecipher
                 return;
             }
 
-            string description = "Expecting";
             foreach (var tuple in actionList)
             {
+
+                // Write description of test
+                string description = "Expecting";
                 string action = tuple.Item1;
-                description = description + String.Format(" {0} occurances of action {1} and", tuple.Item2, action);
-            }
+                description = description + String.Format(" {0} occurances of action {1}.", tuple.Item2, action);
 
-            int place = description.LastIndexOf(" and");
-            description = description.Remove(place, 4).Insert(place, ".");
-
-            foreach (var tuple in actionList)
-            {
-
+                // check the occurances
                 int count = 0;
-                string action = tuple.Item1;
                 int expectedCount = tuple.Item2;
                 foreach (var record in this.records)
                 {
 
-                    if(record.action == action)
+                    if (record.action == action)
                     {
                         count++;
                     }
 
                 }
-                if(count != expectedCount)
+                if (count != expectedCount)
                 {
-                    this.statusList.Add(description, false, String.Format("Expecting {0} x {1}, counted {2}", expectedCount, action, count));
-                    return;
+                    this.statusList.Add(description, false, "But counted "+ count);
+                }else
+                {
+                    this.statusList.Add(description, true, "");
+                }
+            }
+
+        }
+
+        // make sure the test results contains the right combination of action-arguments. Any additional actions or arguments
+        // outside of the expected combination are ignored.
+        public void assertActionArgumentsCombination(List<Tuple<List<string>, int>> actionList)
+        {
+
+            if (actionList.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var tuple in actionList)
+            {
+
+                // Write description of test
+                string description = "Expecting";
+                List<string> arguments = tuple.Item1;
+                description = description + String.Format(" {0} occurances of action: '{1}'", tuple.Item2, arguments[0]);
+                if(arguments.Count > 1)
+                {
+                    description = description + " followed by arguments: ";
+                    for(int i = 1; i < arguments.Count; i++)
+                    {
+                        string arg = arguments[i];
+                        description = description + "'" + arg +"', ";
+                    }
+                    int p1 = description.LastIndexOf(",");
+                    description = description.Remove(p1, 1).Insert(p1, ".");
+                }
+
+                // check the occurances
+                int count = 0;
+                int expectedCount = tuple.Item2;
+                foreach (var record in this.records)
+                {
+
+                    bool matchingArguments = true;
+                    if (record.action == arguments[0])
+                    {
+                        if (arguments.Count > 1)
+                        {
+                            for (int i = 1; i < arguments.Count; i++)
+                            {
+                                string arg = arguments[i];
+                                if (record.references.Count >= i)
+                                {
+                                    if (record.references[i - 1] != arg)
+                                    {
+                                        // one of the args does not match
+                                        matchingArguments = false;
+                                    }
+                                }
+                                else
+                                {
+                                    // the args on the log is at least one short
+                                    matchingArguments = false;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // action not a match
+                        matchingArguments = false;
+                    }
+                    if (matchingArguments)
+                    {
+                        count++;
+                    }
+
+                }
+                if (count != expectedCount)
+                {
+                    this.statusList.Add(description, false, "But counted " + count);
+                }else
+                {
+                    this.statusList.Add(description, true, "");
                 }
 
             }
-
-            this.statusList.Add(description, true, "");
-
         }
 
 

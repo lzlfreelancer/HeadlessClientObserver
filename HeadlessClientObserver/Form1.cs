@@ -38,7 +38,7 @@ namespace HeadlessClientTest
         {
             // declear what happens when a test finishes
             Action<Dictionary<string, string>> on_test_complete = testInfo =>
-            {
+            {     
                 readLogFileAndPrintResults(testInfo);
             };
 
@@ -48,6 +48,12 @@ namespace HeadlessClientTest
                 tests.Init(outputText);
                 tests.update(on_test_complete);
             });
+
+            // switch off top most after 3 sec, because we need it at the start so processes don't go on top, 
+            // but then it's annoying after
+            await Task.Delay(3000);
+            this.TopMost = false;
+
         } 
 
         private async void readLogFileAndPrintResults(Dictionary<string, string> testInfo)
@@ -96,7 +102,7 @@ namespace HeadlessClientTest
                     outputText.SelectionLength = 0;
 
                     outputText.SelectionColor = Color.Green;
-                    outputText.AppendText("\n" + testStatus.Item1 + " : PASSED " + "\n\n");
+                    outputText.AppendText("\n[PASSED]   " + testStatus.Item1 + "\n\n");
                     outputText.SelectionColor = outputText.ForeColor;
 
                 }
@@ -107,7 +113,7 @@ namespace HeadlessClientTest
                     outputText.SelectionLength = 0;
 
                     outputText.SelectionColor = Color.Red;
-                    outputText.AppendText("\n" + testStatus.Item1 + " : FAILED - " + testStatus.Item3 + "\n\n");
+                    outputText.AppendText("\n[FAILED]   " + testStatus.Item1 + " ===> " + testStatus.Item3 + "\n\n");
                     outputText.SelectionColor = outputText.ForeColor;
                 }
             }

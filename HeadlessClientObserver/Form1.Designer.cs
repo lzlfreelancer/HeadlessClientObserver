@@ -33,23 +33,27 @@
             // 
             // outputText
             // 
-            this.outputText.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.outputText.Location = new System.Drawing.Point(5, 4);
+            this.outputText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.outputText.Location = new System.Drawing.Point(0, 0);
+            this.outputText.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.outputText.Name = "outputText";
-            this.outputText.Size = new System.Drawing.Size(1953, 916);
+            this.outputText.ReadOnly = true;
+            this.outputText.Size = new System.Drawing.Size(2868, 1366);
             this.outputText.TabIndex = 0;
             this.outputText.Text = "";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(19F, 37F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1961, 923);
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(2868, 1366);
             this.Controls.Add(this.outputText);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.Name = "Form1";
             this.Text = "Headless Client Tests";
+            this.TopMost = true;
             this.ResumeLayout(false);
 
         }

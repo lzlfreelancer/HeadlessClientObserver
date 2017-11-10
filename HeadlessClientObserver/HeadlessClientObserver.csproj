@@ -55,7 +55,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Globals.cs" />
-    <Compile Include="HeadlessClientTestResultDecipher.cs" />
+    <Compile Include="TestSuite\TestResultDeciphers\HeadlessClientTestResultDecipher.cs" />
     <Compile Include="HeadlessClientTestResultReader.cs" />
     <Compile Include="IdGenerator.cs" />
     <Compile Include="Program.cs" />
@@ -72,6 +72,9 @@
     <Compile Include="TestSuite\TestSuite.cs" />
     <Compile Include="TestSuite\Tests\Test1.cs" />
     <Compile Include="TestSuite\Tests\Test2.cs" />
+    <Compile Include="TestSuite\Tests\Test3.cs" />
+    <Compile Include="TestSuite\Tests\Test4.cs" />
+    <Compile Include="TestSuite\Tests\Test5.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
