@@ -33,7 +33,7 @@ namespace HeadlessClientTestResultDecipher
                 new Tuple<List<string>, int>(
                     new List<string>()
                     {
-                        "CreateParty",
+                        "CreatePartySuccess",
                         "Party1"
                     }
                     , 1 ),
@@ -47,7 +47,8 @@ namespace HeadlessClientTestResultDecipher
                 new Tuple<List<string>, int>(
                     new List<string>()
                     {
-                        "JoinFailed"
+                        "JoinFailed",
+                        "Party1"
                     }
                     , 1 )
             };
