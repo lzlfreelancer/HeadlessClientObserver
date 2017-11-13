@@ -69,6 +69,13 @@ namespace HeadlessClientTestResultDecipher
                         "PartyNotFound",
                         "x"
                     }
+                    , 1 ),
+                new Tuple<List<string>, int>(
+                    new List<string>()
+                    {
+                        "PartyNotFound",
+                        "asdf"
+                    }
                     , 1 )
             };
 

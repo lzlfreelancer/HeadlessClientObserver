@@ -37,7 +37,15 @@ namespace HeadlessClientTestResultDecipher
                         "JoinParty",
                         "Party2"
                     }
+                    , 1 ),
+                new Tuple<List<string>, int>(
+                    new List<string>()
+                    {
+                        "UserRemoved"
+                    }
                     , 1 )
+
+                    
             };
 
             this.assertActionArgumentsCombination(combinedActions);

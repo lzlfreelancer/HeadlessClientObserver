@@ -37,6 +37,12 @@ namespace HeadlessClientTestResultDecipher
                         "JoinParty",
                         "Party3"
                     }
+                    , 2 ),
+                new Tuple<List<string>, int>(
+                    new List<string>()
+                    {
+                        "UserRemoved"
+                    }
                     , 2 )
             };
 
