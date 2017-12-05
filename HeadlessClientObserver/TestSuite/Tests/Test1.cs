@@ -18,7 +18,7 @@ Join Party 1 (fail)
 Result:
 All Clients should be added to the Host
 
-    //HOST1 CREATE_PARTY, WAIT 30 seconds, QUIT
+    //HOST1 CREATE_PARTY, WAIT 40 seconds, QUIT
     //CLIENT1 SEARCH_PARTY, JOIN_PARTY, Wait 10 seconds, LEAVE_PARTY, QUIT
     //CLIENT2 SEARCH_PARTY, JOIN_PARTY, Wait 10 seconds, LEAVE_PARTY, QUIT
     //CLIENT3 SEARCH_PARTY, JOIN_PARTY, Wait 10 seconds, LEAVE_PARTY, QUIT
@@ -64,7 +64,7 @@ Join Party 1 (fail)
 Result:
 All Clients should be added to the Host
 
-//HOST1 CREATE_PARTY, WAIT 30 seconds, QUIT
+//HOST1 CREATE_PARTY, WAIT 40 seconds, QUIT
 //CLIENT1 SEARCH_PARTY, JOIN_PARTY, Wait 10 seconds, LEAVE_PARTY, QUIT
 //CLIENT2 SEARCH_PARTY, JOIN_PARTY, Wait 10 seconds, LEAVE_PARTY, QUIT
 //CLIENT3 SEARCH_PARTY, JOIN_PARTY, Wait 10 seconds, LEAVE_PARTY, QUIT           
@@ -83,7 +83,7 @@ All Clients should be added to the Host
         base.StartTest();
 
         TestClient host = new TestClient();
-        host.PerformAction(String.Format("-c {0} -t 1 -a 1", Globals.clientIdGenerator.getNextId())); // create party, wait 30, exit
+        host.PerformAction(String.Format("-c {0} -t 1 -a 1", Globals.clientIdGenerator.getNextId())); // create party, wait 40, exit
         m_clients.Add(host);
 
         int numOfClients = 4;
@@ -91,7 +91,7 @@ All Clients should be added to the Host
         for(int i = 0; i < numOfClients; i++)
         {
             TestClient client = new TestClient();
-            client.PerformAction(String.Format("-c {0} -t 1 -a 2", Globals.clientIdGenerator.getNextId())); // wait 10, join party, wait 10 exit
+            client.PerformAction(String.Format("-c {0} -t 1 -a 2", Globals.clientIdGenerator.getNextId())); // wait 10, join party, wait 15 exit
             m_clients.Add(client);
         }
 

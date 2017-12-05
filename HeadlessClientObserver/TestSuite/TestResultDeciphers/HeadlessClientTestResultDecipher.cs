@@ -48,6 +48,7 @@ namespace HeadlessClientTestResultDecipher
     {
         public string type = "client";
         public int id = -1;
+        public string photonId = "";
         public string action = "";
         public List<string> references = new List<string>();
     }

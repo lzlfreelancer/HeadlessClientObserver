@@ -75,6 +75,7 @@
     <Compile Include="TestSuite\Tests\Test3.cs" />
     <Compile Include="TestSuite\Tests\Test4.cs" />
     <Compile Include="TestSuite\Tests\Test5.cs" />
+    <Compile Include="TestSuite\Tests\Test6.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

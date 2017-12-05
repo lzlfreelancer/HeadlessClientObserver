@@ -81,15 +81,24 @@ namespace HeadlessClientTestResultReader
 
             if (testDecipher != null)
             {
-                if (words.Length >= 3)
+                if (words.Length == 3)
                 {
+                    // this is a startAction / endAction statement
                     TestActionRecord testActionRecord = new TestActionRecord();
-                    //testActionRecord.type = words[0];
                     testActionRecord.id = Convert.ToInt32(words[1]);
                     testActionRecord.action = words[2];
-                    if (words.Length > 3)
+                    testDecipher.addTestActionRecord(testActionRecord);
+                }
+
+                else if (words.Length >= 4)
+                {
+                    TestActionRecord testActionRecord = new TestActionRecord();
+                    testActionRecord.id = Convert.ToInt32(words[1]);
+                    testActionRecord.photonId = words[2];
+                    testActionRecord.action = words[3];
+                    if (words.Length > 4)
                     {
-                        for (var i = 3; i < words.Length; i++)
+                        for (var i = 4; i < words.Length; i++)
                         {
                             string reference = words[i];
                             testActionRecord.references.Add(reference);

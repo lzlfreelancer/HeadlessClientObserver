@@ -27,7 +27,7 @@ class TestSuite
         Test1 testCase1 = new Test1();
         m_tests.Add(testCase1);
 
-        Test2 testCase2 = new Test2();
+        /*Test2 testCase2 = new Test2();
         m_tests.Add(testCase2);
 
         Test3 testCase3 = new Test3();
@@ -38,6 +38,9 @@ class TestSuite
 
         Test5 testCase5 = new Test5();
         m_tests.Add(testCase5);
+
+        Test6 testCase6 = new Test6();
+        m_tests.Add(testCase6);*/
 
     }
 
