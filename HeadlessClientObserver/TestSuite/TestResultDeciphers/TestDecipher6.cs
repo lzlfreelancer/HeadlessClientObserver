@@ -13,7 +13,7 @@ namespace HeadlessClientTestResultDecipher
         public override void assesTestResult()
         {
             base.assesTestResult();
-            this.assertNumberOfIndividualEntities(4);
+            this.assertNumberOfIndividualEntities(2);
 
             var combinedActions = new List<Tuple<List<string>, int>>
             {
@@ -35,33 +35,33 @@ namespace HeadlessClientTestResultDecipher
                     new List<string>()
                     {
                         "JoinParty",
-                        "Party 6"
-                    }
-                    , 2 ),
-                new Tuple<List<string>, int>(
-                    new List<string>()
-                    {
-                        "Attemping to Create Party",
-                        "Party 6.1"
-                    }
-                    , 1 ),
-                new Tuple<List<string>, int>(
-                    new List<string>()
-                    {
-                        "CreatePartySuccess",
-                        "Party 6.1"
-                    }
-                    , 1 ),
-                new Tuple<List<string>, int>(
-                    new List<string>()
-                    {
-                        "JoinParty",
-                        "Party 6.1"
+                        "Party 6",
+                        "5"
                     }
                     , 1 )
+
+            };
+
+            var combinedActionsHost = new List<Tuple<List<string>, int>>
+            {
+
+                new Tuple<List<string>, int>(
+                    new List<string>()
+                    {
+                        "AddedUser"
+                    }
+                    , 5 ),
+                new Tuple<List<string>, int>(
+                    new List<string>()
+                    {
+                        "UserRemoved"
+                    }
+                    , 4 )
+
             };
 
             this.assertActionArgumentsCombination(combinedActions);
+            this.assertActionArgumentsCombination(combinedActionsHost, "Host");
 
         }
 

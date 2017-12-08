@@ -83,15 +83,15 @@ namespace HeadlessClientTestResultDecipher
         // (but multiple dumps per instance is allowed) 
         public void assertNumberOfIndividualEntities(int count)
         {
-            HashSet<int> setOfIds = new HashSet<int>();
+            HashSet<string> setOfIds = new HashSet<string>();
 
             foreach(var record in this.records) {
-                if(record.id < 0)
+                if(record.photonId == "")
                 {
-                    this.statusList.Add(String.Format("Assert {0} individual entities", count), false, "Invalid id of < 0");
+                    this.statusList.Add(String.Format("Assert {0} individual entities", count), false, "Invalid id of empty string");
                     return;
                 }
-                setOfIds.Add(record.id);
+                setOfIds.Add(record.photonId);
             }
 
             if(setOfIds.Count == count)
@@ -125,7 +125,7 @@ namespace HeadlessClientTestResultDecipher
 
         // make sure the test results contains the right combination of actions. Any additional actions outside of the
         // expected combination are ignored.
-        public void assertActionCombination(List<Tuple<string, int>> actionList)
+        public void assertActionCombination(List<Tuple<string, int>> actionList, string userType = "")
         {
 
             if(actionList.Count == 0)
@@ -149,6 +149,11 @@ namespace HeadlessClientTestResultDecipher
 
                     if (record.action == action)
                     {
+                        if(userType != "" && record.type != userType)
+                        {
+                            // this is not the right type of user
+                            continue;
+                        }
                         count++;
                     }
 
@@ -166,7 +171,7 @@ namespace HeadlessClientTestResultDecipher
 
         // make sure the test results contains the right combination of action-arguments. Any additional actions or arguments
         // outside of the expected combination are ignored.
-        public void assertActionArgumentsCombination(List<Tuple<List<string>, int>> actionList)
+        public void assertActionArgumentsCombination(List<Tuple<List<string>, int>> actionList, string userType = "")
         {
 
             if (actionList.Count == 0)
@@ -181,6 +186,10 @@ namespace HeadlessClientTestResultDecipher
                 string description = "Expecting";
                 List<string> arguments = tuple.Item1;
                 description = description + String.Format(" {0} occurances of action: '{1}'", tuple.Item2, arguments[0]);
+                if(userType != "")
+                {
+                    description = description + " for user type: '"+userType+"'";
+                }
                 if(arguments.Count > 1)
                 {
                     description = description + " followed by arguments: ";
@@ -230,6 +239,11 @@ namespace HeadlessClientTestResultDecipher
                     }
                     if (matchingArguments)
                     {
+                        if(userType != "" && record.type != userType)
+                        {
+                            // this is not the right type of user
+                            continue;
+                        }
                         count++;
                     }
 

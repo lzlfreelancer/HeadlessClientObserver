@@ -41,7 +41,7 @@ namespace HeadlessClientTestResultDecipher
                 new Tuple<List<string>, int>(
                     new List<string>()
                     {
-                        "UserRemoved"
+                        "UserLeft"
                     }
                     , 2 )
             };

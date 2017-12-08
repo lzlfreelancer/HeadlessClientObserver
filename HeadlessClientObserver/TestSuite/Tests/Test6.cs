@@ -1,25 +1,15 @@
 ﻿/*
 Test #6
 Host 1:
-Create Party 6, size 3
+Create Party 6, size 5
 
 Client 1:
-Join Party 6 (success)
+Join Party 6 with 4 slots (success)  
 
-Client 2:
-Join Party 6 (success)
+Total members should be 5
 
-Client 3: 
-Join Party 6 (success)
-
-Host 2: 
-Create Party 6.1 (success)
-
-Host 1:
-Join Party 6.1 (success)
-
-Result:
-All Clients should be added to the Host 1, Host 1 then joins host 2
+Client 1:
+leave Party 6, all local users should leave as well (success)  
 
 */
 
@@ -45,25 +35,15 @@ public class Test6 : BaseTest
             @"
 Test #6
 Host 1:
-Create Party 6, size 3
+Create Party 6, size 5
 
 Client 1:
-Join Party 6 (success)
+Join Party 6 with 4 slots (success)  
 
-Client 2:
-Join Party 6 (success)
+Total members should be 5
 
-Client 3: 
-Join Party 6 (success)
-
-Host 2: 
-Create Party 6.1 (success)
-
-Host 1:
-Join Party 6.1 (success)
-
-Result:
-All Clients should be added to the Host 1, Host 1 then joins host 2       
+Client 1:
+leave Party 6, all local users should leave as well (success)  
         ";
     }
 
@@ -78,22 +58,13 @@ All Clients should be added to the Host 1, Host 1 then joins host 2
     {
         base.StartTest();
 
-        TestClient host1 = new TestClient();
-        host1.PerformAction(String.Format("-c {0} -t 6 -a 1", Globals.clientIdGenerator.getNextId())); // create party, wait 40, join second party 
-        m_clients.Add(host1);
+        TestClient host = new TestClient();
+        host.PerformAction(String.Format("-c {0} -t 6 -a 1", Globals.clientIdGenerator.getNextId())); // create party, wait 40
+        m_clients.Add(host);
 
-        TestClient host2 = new TestClient();
-        host2.PerformAction(String.Format("-c {0} -t 6 -a 2", Globals.clientIdGenerator.getNextId())); // create party, wait 100, exit
-        m_clients.Add(host2);
-
-        int numOfClients = 2;
-
-        for (int i = 0; i < numOfClients; i++)
-        {
-            TestClient client = new TestClient();
-            client.PerformAction(String.Format("-c {0} -t 6 -a 3", Globals.clientIdGenerator.getNextId())); // wait 10, join party, wait 70 exit
-            m_clients.Add(client);
-        }
+        TestClient client = new TestClient();
+        client.PerformAction(String.Format("-c {0} -t 6 -a 2", Globals.clientIdGenerator.getNextId())); // join party with 4 people, wait 10, exit
+        m_clients.Add(client);
 
     }
 
