@@ -63,15 +63,15 @@ All users should disband from the party after the heartbeat timer elapses
     {
         base.StartTest();
 
-        TestClient host = new TestClient();
+        TestClient host = new TestClient(m_text_output);
         host.PerformAction(String.Format("-c {0} -t 5 -a 1", Globals.clientIdGenerator.getNextId())); // create party, wait 10, stop heatbeat
         m_clients.Add(host);
 
-        TestClient client1 = new TestClient();
+        TestClient client1 = new TestClient(m_text_output);
         client1.PerformAction(String.Format("-c {0} -t 5 -a 2", Globals.clientIdGenerator.getNextId())); // wait 10, join party
         m_clients.Add(client1);
 
-        TestClient client2 = new TestClient();
+        TestClient client2 = new TestClient(m_text_output);
         client2.PerformAction(String.Format("-c {0} -t 5 -a 2", Globals.clientIdGenerator.getNextId())); // wait 10, join party
         m_clients.Add(client2);
 

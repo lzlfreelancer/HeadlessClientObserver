@@ -82,7 +82,7 @@ All Clients should be added to the Host
     {
         base.StartTest();
 
-        TestClient host = new TestClient();
+        TestClient host = new TestClient(m_text_output);
         host.PerformAction(String.Format("-c {0} -t 1 -a 1", Globals.clientIdGenerator.getNextId())); // create party, wait 40, exit
         m_clients.Add(host);
 
@@ -90,7 +90,7 @@ All Clients should be added to the Host
 
         for(int i = 0; i < numOfClients; i++)
         {
-            TestClient client = new TestClient();
+            TestClient client = new TestClient(m_text_output);
             client.PerformAction(String.Format("-c {0} -t 1 -a 2", Globals.clientIdGenerator.getNextId())); // wait 10, join party, wait 15 exit
             m_clients.Add(client);
         }

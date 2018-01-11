@@ -57,19 +57,19 @@ Search for room with wrong name(fail)
     {
         base.StartTest();
 
-        TestClient host = new TestClient();
+        TestClient host = new TestClient(m_text_output);
         host.PerformAction(String.Format("-c {0} -t 3 -a 1", Globals.clientIdGenerator.getNextId())); // create party, wait 10, exit
         m_clients.Add(host);
 
-        TestClient client1 = new TestClient();
+        TestClient client1 = new TestClient(m_text_output);
         client1.PerformAction(String.Format("-c {0} -t 3 -a 2", Globals.clientIdGenerator.getNextId())); // search success
         m_clients.Add(client1);
 
-        TestClient client2 = new TestClient();
+        TestClient client2 = new TestClient(m_text_output);
         client2.PerformAction(String.Format("-c {0} -t 3 -a 3", Globals.clientIdGenerator.getNextId())); // search fail wrong password
         m_clients.Add(client2);
 
-        TestClient client3 = new TestClient();
+        TestClient client3 = new TestClient(m_text_output);
         client3.PerformAction(String.Format("-c {0} -t 3 -a 4", Globals.clientIdGenerator.getNextId())); // search fail wrong name
         m_clients.Add(client3);
 

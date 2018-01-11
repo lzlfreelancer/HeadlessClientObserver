@@ -58,11 +58,11 @@ leave Party 6, all local users should leave as well (success)
     {
         base.StartTest();
 
-        TestClient host = new TestClient();
+        TestClient host = new TestClient(m_text_output);
         host.PerformAction(String.Format("-c {0} -t 6 -a 1", Globals.clientIdGenerator.getNextId())); // create party, wait 40
         m_clients.Add(host);
 
-        TestClient client = new TestClient();
+        TestClient client = new TestClient(m_text_output);
         client.PerformAction(String.Format("-c {0} -t 6 -a 2", Globals.clientIdGenerator.getNextId())); // join party with 4 people, wait 10, exit
         m_clients.Add(client);
 

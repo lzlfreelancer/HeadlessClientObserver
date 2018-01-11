@@ -51,11 +51,11 @@ Host 2 should not be able to create this party.
     {
         base.StartTest();
 
-        TestClient host = new TestClient();
+        TestClient host = new TestClient(m_text_output);
         host.PerformAction(String.Format("-c {0} -t 2 -a 1", Globals.clientIdGenerator.getNextId())); // create party, wait 10, exit
         m_clients.Add(host);
 
-        TestClient host2 = new TestClient();
+        TestClient host2 = new TestClient(m_text_output);
         host2.PerformAction(String.Format("-c {0} -t 2 -a 1", Globals.clientIdGenerator.getNextId())); // host 2 do the same
         m_clients.Add(host2);
 

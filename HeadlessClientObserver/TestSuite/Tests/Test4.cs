@@ -57,11 +57,11 @@ Host should kick the user after the heartbeat timer elapses
     {
         base.StartTest();
 
-        TestClient host = new TestClient();
+        TestClient host = new TestClient(m_text_output);
         host.PerformAction(String.Format("-c {0} -t 4 -a 1", Globals.clientIdGenerator.getNextId())); // create party, wait 40, exit
         m_clients.Add(host);
 
-        TestClient client1 = new TestClient();
+        TestClient client1 = new TestClient(m_text_output);
         client1.PerformAction(String.Format("-c {0} -t 4 -a 2", Globals.clientIdGenerator.getNextId())); // wait 10, join party, wait 10, stop heatbeat
         m_clients.Add(client1);
 
